@@ -1,0 +1,32 @@
+{
+  "name": "x.bdtechx.com",
+  "version": "1.0.0",
+  "description": "MySQL to Cloudflare D1 migration in nodejs",
+  "main": "migrate-d1.js",
+  "scripts": {
+    "migrate": "node migrate-d1.js",
+    "test-local": "node test-sqlite-local.js",
+    "test-remote": "node testd1-connection.js",
+    "start": "node mysql-to-sqlite-start.js"
+  },
+  "keywords": [
+    "mysql",
+    "cloudflare",
+    "d1",
+    "migration",
+    "database"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "better-sqlite3": "^12.2.0",
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.15.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "wrangler": "^4.38.0"
+  }
+}
