@@ -5,26 +5,20 @@
 
 ---
 
-## 🚀 Overview
+## 📦 Installation
 
-This Node.js project allows you to migrate MySQL databases to **Cloudflare D1**, using SQLite as an intermediate step for testing. The workflow ensures:
+1. Clone the repository:
 
-- Schema generation from MySQL / auto dump file for simple migration 
-- Data transfer verification
-- Clean D1 data before migration without conflicts 
-- Batch insertion for performance / 4k row in 30sec
-- Foreign key safety during migration / if Foreign key Error during migrations Just delete Key from MySQL then again migrate then make sql query to add in d1/sqlite manually 
+```bash
+git clone https://github.com/oliwebd/mysql-sqlite-to-d1.git .
 
----
+```
 
-## 🛠 Features
+2. Install dependencies:
 
-- Connects to MySQL and generates a complete SQL dump.
-- Creates a test SQLite database to verify migration.
-- Migrates data into Cloudflare D1, skipping the `_cf_KV` table.
-- Batch processing for large datasets.
-- Verifies migration by comparing row counts.
-
+```bash
+npm install
+```
 ---
 
 ## 🔧 Environment Setup
@@ -45,25 +39,6 @@ CLOUDFLARE_API_TOKEN="xxxox-xxxx-xxxx-xxxx"
 D1_DATABASE_ID="xxxox-xxxxx-xxxx"
 ```
 
-> **⚠️ Security Note:** Never commit your `.env` file to public repositories. Use `.gitignore` or GitHub secrets to protect sensitive information.
-
----
-
-## 📦 Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/oliwebd/mysql-sqlite-to-d1.git .
-
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
 ---
 
 ## ⚡ Scripts
@@ -74,6 +49,28 @@ npm install
 | `npm run test-local` | Test migration on SQLite database when you don't use D1 (cloudflare). |
 | `npm run test-remote` | Test connection to Cloudflare D1 / Check API Troken Ok or But you Run migrate Directly with first option. |
 | `npm run test` | Generate SQL from MySQL and create local SQLite test DB. It's similar same as test-local. |
+
+---
+
+## 🚀 Overview
+
+This Node.js project allows you to migrate MySQL databases to **Cloudflare D1**, using SQLite as an intermediate step for testing. The workflow ensures:
+
+- Schema generation from MySQL / auto dump file for simple migration 
+- Data transfer verification
+- Clean D1 data before migration without conflicts 
+- Batch insertion for performance / 4k row in 30sec
+- Foreign key safety during migration / if Foreign key Error during migrations Just delete Key from MySQL then again migrate then make sql query to add in d1/sqlite manually 
+
+---
+
+## 🛠 Features
+
+- Connects to MySQL and generates a complete SQL dump.
+- Creates a test SQLite database to verify migration.
+- Migrates data into Cloudflare D1, skipping the `_cf_KV` table.
+- Batch processing for large datasets.
+- Verifies migration by comparing row counts.
 
 ---
 
@@ -150,7 +147,8 @@ GPLv3
 
 ## 👤 Author
 
-OliMiah 
+Oli Miah 
+- Website: [https://olimiah.vercel.app/](Oli Miah - Full Stack Web Dev) 
 
 --- 
 
