@@ -148,7 +148,7 @@ GPLv3
 ## 👤 Author
 
 Oli Miah 
-- Website: [https://olimiah.vercel.app/](Oli Miah - Full Stack Web Dev) 
+- [Full Stack Web Developer](https://olimiah.vercel.app/) 
 
 --- 
 
