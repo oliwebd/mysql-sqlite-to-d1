@@ -68,6 +68,40 @@ class MySQLToSQLiteMigrator {
         }));
     }
 
+    // Enhanced JSON handling method
+    handleJSONValue(value, columnName = '') {
+        if (value === null || value === undefined) {
+            return 'NULL';
+        }
+
+        // If it's already a string, check if it's valid JSON
+        if (typeof value === 'string') {
+            try {
+                // Try to parse it to validate it's proper JSON
+                const parsed = JSON.parse(value);
+                // If parsing succeeds, escape the JSON string properly
+                return this.escapeForSQLite(value);
+            } catch (e) {
+                // If it's not valid JSON, treat as regular string
+                return this.escapeForSQLite(value);
+            }
+        }
+
+        // If it's an object or array, stringify it properly
+        if (typeof value === 'object') {
+            try {
+                const jsonString = JSON.stringify(value);
+                return this.escapeForSQLite(jsonString);
+            } catch (e) {
+                console.warn(`Failed to stringify JSON for column ${columnName}:`, e.message);
+                return this.escapeForSQLite(String(value));
+            }
+        }
+
+        // For other types, convert to string
+        return this.escapeForSQLite(String(value));
+    }
+
     // Enhanced escaping for SQLite compatibility
     escapeForSQLite(value) {
         if (value === null || value === undefined) {
@@ -184,6 +218,24 @@ class MySQLToSQLiteMigrator {
         return 'TEXT';
     }
 
+    // Check if column is JSON type
+    isJSONColumn(columnName, columnType) {
+        const lowerColumnName = columnName.toLowerCase();
+        const lowerColumnType = columnType ? columnType.toLowerCase() : '';
+        
+        // Check if column type is JSON
+        if (lowerColumnType.includes('json')) {
+            return true;
+        }
+        
+        // Check if column name suggests JSON content
+        if (lowerColumnName.includes('json') || lowerColumnName.endsWith('_json')) {
+            return true;
+        }
+        
+        return false;
+    }
+
     // Legacy escapeText method for backward compatibility
     escapeText(value) {
         return this.escapeForSQLite(value).replace(/^'|'$/g, ''); // Remove surrounding quotes
@@ -283,6 +335,11 @@ class MySQLToSQLiteMigrator {
                         if (columnMeta) {
                             const colType = columnMeta.Type.toLowerCase();
                             
+                            // Handle JSON columns specifically
+                            if (this.isJSONColumn(col, colType)) {
+                                return this.handleJSONValue(value, col);
+                            }
+                            
                             // Handle datetime/timestamp columns
                             if (colType.includes('datetime') || colType.includes('timestamp')) {
                                 return this.formatMySQLDateTime(value);
@@ -347,6 +404,12 @@ class MySQLToSQLiteMigrator {
         const singleQuotes = (content.match(/'/g) || []).length;
         if (singleQuotes % 2 !== 0) {
             issues.push('Unmatched single quotes detected');
+        }
+        
+        // Check for [object Object] instances
+        const objectInstances = content.match(/\[object Object\]/g);
+        if (objectInstances && objectInstances.length > 0) {
+            issues.push(`${objectInstances.length} '[object Object]' instances found - JSON serialization may have failed`);
         }
         
         // Check for unescaped newlines (should be \\n not literal newlines in VALUES)
