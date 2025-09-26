@@ -45,10 +45,9 @@ D1_DATABASE_ID="xxxox-xxxxx-xxxx"
 
 | Script | Description |
 |--------|-------------|
-| `npm run migrate` | Runs full SQLite → D1 migration. |
-| `npm run test-local` | Test migration on SQLite database when you don't use D1 (cloudflare). |
-| `npm run test-remote` | Test connection to Cloudflare D1 / Check API Troken Ok or But you Run migrate Directly with first option. |
-| `npm run test` | Generate SQL from MySQL and create local SQLite test DB. It's similar same as test-local. |
+| `npm run migrate` | Runs full SQLite → D1 migration. 
+| `npm run test-d1-conn` | Test connection to Cloudflare D1 / Check API Troken Ok or But you Run migrate Directly with first option. |
+| `npm run start` | Generate SQL from MySQL and create local SQLite test DB |
 
 ---
 
