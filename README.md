@@ -78,7 +78,7 @@ This Node.js project allows you to migrate MySQL databases to **Cloudflare D1**,
 ### Step 1: Generate SQL from MySQL
 
 ```bash
-npm run test
+npm run start
 ```
 
 - Connects to MySQL
@@ -133,7 +133,6 @@ Found 1739 INSERT statements
 ## 🔗 References
 
 - [Cloudflare D1 Docs](https://developers.cloudflare.com/d1/)
-- [CloudPanel](https://www.cloudpanel.io)
 - [Node.js](https://nodejs.org/)
 
 ---
